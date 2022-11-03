@@ -8,9 +8,11 @@ from .settings import (
 
 @api_view()
 def root_route(request):
-    return Response({
-        "message": "Welcome to my drf API!"
-    })
+    return Response(
+        {
+            "messages": "Welcome to my drf API!"
+            }
+        )
 
 
 @api_view(['POST'])
