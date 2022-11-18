@@ -10,7 +10,7 @@
 
 [Github Repo](https://github.com/antoniog675/drf-api-pp5)
 
-[Repo for project](https://github.com/antoniog675/drf-api-pp5)
+[Repo for FitnessBlogs PP5](https://github.com/antoniog675/drf-api-pp5)
 
 [Deployed Site](https://fitness-blogz.herokuapp.com/)
 
