@@ -10,7 +10,12 @@
 
 [Github Repo](https://github.com/antoniog675/drf-api-pp5)
 
+[Repo for project](https://github.com/antoniog675/drf-api-pp5)
+
+[Deployed Site](https://fitness-blogz.herokuapp.com/)
+
 ![Image of json of deployed api on heroku](assets/api_deployed-heroku.jpg)
+
 
 The API that I have is going to be used to assist the 'FitnessBlogz' website with handling posts, profiles, comments, likes and followers.
 
