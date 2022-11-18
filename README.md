@@ -220,5 +220,41 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
 
 CORS_ALLOW_CREDENTIALS = True
 
+<hr>
 
+Have the wsgi for the Procfile -
 
+WSGI_APPLICATION = 'drf_api.wsgi.application'
+
+<hr>
+
+Update the database variable -
+
+DATABASES = {
+    'default': ({
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    } if 'DEV' in os.environ else dj_database_url.parse(
+        os.environ.get('DATABASE_URL')
+    ))
+}
+
+<hr>
+After these settings are done, I will migrate the database using -
+
+- python3 manage.py makemigrations
+
+- python3 manage.py migrate
+
+<hr>
+
+Freeze requirements with -
+
+pip3 freeze --local > requiremets.txt
+
+<hr>
+And finally, git add, git commit, git push branch, and then I will navigate to heroku and go onto deploy, select the correct repo and deploy branch.
+
+## Credits-
+
+Credits to code institute for the walk through video in creating the API, and allowing me to use the project as a template to build my api for my PP5 project
