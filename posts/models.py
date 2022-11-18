@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.  
+# Create your models here.
 
 
 class Post(models.Model):
@@ -10,7 +10,7 @@ class Post(models.Model):
     default image set so we can always reference an image
     """
     image_filter_choices = [
-        ('_1977', '1977'), 
+        ('_1977', '1977'),
         ('brannan', 'Brannan'),
         ('earlybird', 'Earlybird'),
         ('hudson', 'Hudson'),
@@ -38,7 +38,7 @@ class Post(models.Model):
         choices=image_filter_choices,
         default="normal"
         )
-    
+
     class Meta:
         ordering = ['-created_at']
 

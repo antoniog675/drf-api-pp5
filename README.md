@@ -1,108 +1,75 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# FitnessBlogz - API
 
-Welcome antoniog675,
+* * *
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+### ABOUT THE WEBSITE -
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+* * * 
 
-## Gitpod Reminders
+[Live API Link](https://drf-api-pp5.herokuapp.com/)
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+[Github Repo](https://github.com/antoniog675/drf-api-pp5)
 
-`python3 -m http.server`
+![Image of json of deployed api on heroku](assets/api_deployed-heroku.jpg)
 
-A blue button should appear to click: _Make Public_,
+The API that I have is going to be used to assist the 'FitnessBlogz' website with handling posts, profiles, comments, likes and followers.
 
-Another blue button should appear to click: _Open Browser_.
+What is the website? The website is going to be a 'Instagram' like website where users can share their workout routine, exercises, fitness progress and be able to like and comment on others posts to be able to support others on their fitness journey!
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+## Database
+<hr>
 
-A blue button should appear to click: _Make Public_,
+![ERD Diagram for model](/assets/PP5-API.jpg)
 
-Another blue button should appear to click: _Open Browser_.
+The User model is going to be the django default model - We will use user (PK) owner which will have a OneToOne relationship and on_delete=models.CASCADE.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+User Model ---> id (BigAuto), username (Char) and password (Char)
 
-To log into the Heroku toolbelt CLI:
+Profile Model ---> id (BigAuto), owner (OneToOne), created_at (DateTime), updated_at (DateTime), name (Char), content, (Text), image (Image)
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+Followers Model ---> id (BigAuto), owner-following (ForeignKeyUser), followed (ForeignKeyUser), created_at (DateTime)
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+Comments Model ---> id (BigAuto), owner (ForeignKey), post(ForeignKey), created_at (DateTime), updated_at(DateTime), content (Text)
 
-------
+Post Model ---> id (BigAuto), owner (ForeignKey), created_at (DateTime), upadted_at(DateTime), title (Char), content(Text), image (Image)
 
-## Release History
+Like Model ---> id (BigAuto), owner (ForeignKey), post (ForeignKey), created_at (DateTime)
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+<hr>
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+## Testing
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+Tested profiles API, created 3 profiles and all three are stored, contains the users profile image, date createdm bio how many posts they have and how many followers they have and how many people they are following. URL link also goes to correct page
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+![Profiles API with relevant data](/assets/api_profiles.jpg)
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+Profile 1 URL works, tested that this works for /2 and /3
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+![Returns data of profile 1 (Antonio)](/assets/api_profile_1.jpg)
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+All posts that have been created and uploaded are loaded
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+![Posts API](/assets/api_posts.jpg)
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+All comments that have been uploaded from most recent to oldest
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+![Comments API](/assets/api_comments.jpg)
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+All likes in website
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+![Likes API](/assets/api_likes.jpg)
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+Counts the number of profile that are following eachother
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+![Followers API](/assets/api_followers.jpg)
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+<ul>
+    <li>Deleting posts removes it from the API, edited posts are also reflected in the backend</li>
+    <li>Liking and unliking posts are reflected throughout the API, the number of likes on a post in the front end are the same as the number of likes in the backend </li>
+</ul>
 
-------
+## PEP8 -
 
-## FAQ about the uptime script
+![Warning from the gitpod pycodestyle](/assets/pep8_warnings_manual.jpg)
 
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+I have manually gone through each file to check the warnings and have been correcting all of them, currently there are NO warnings
