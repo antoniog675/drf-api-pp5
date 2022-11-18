@@ -72,4 +72,153 @@ Counts the number of profile that are following eachother
 
 ![Warning from the gitpod pycodestyle](/assets/pep8_warnings_manual.jpg)
 
-I have manually gone through each file to check the warnings and have been correcting all of them, currently there are NO warnings
+I have manually gone through each file to check the warnings and have been correcting all of them, currently the only warnings from the settings file, if I try to break this code it completely breaks the API.
+
+![Warnings from drf_api sttings.py](/assets/api_settings_warnings.jpg)
+
+Same warnings as above, except in the env.py, if I try to make the line shorter it will break the API
+
+![Warnings in the env.py](/assets/api_warnings_env.jpg)
+
+## Technologies used - 
+<hr>
+
+### Main Language -
+<ul>
+<li>Python</li>
+</ul>
+
+### Frameworks, Libraries and Programs used -
+<ul>
+<li>Django</li>
+<li>Django RestFramework</li>
+<li>Heroku</li>
+<li>Pillow</li>
+<li>Django Rest Auth</li>
+<li>PostgresSQL</li>
+<li>Cloudinary</li>
+</ul>
+
+
+## Deployment
+<hr>
+
+- To be able to deploy the api on heroku we had to add an env.py and add somethings into the settings
+
+- Heroku requires a Procfile in order for the site to be hosted online
+
+The heroku app needs the config vars -
+<ul>
+    <li>ALLOWED_HOST</li>
+    <li>CLIENT_ORIGIN</li>
+    <li>CLIENT_ORIGIN_DEV</li>
+    <li>CLOUDINARY_URL</li>
+    <li>DATABASE_URL</li>
+    <li>DISABLE_COLLECTSTATIC</li>
+    <li>my_secret_key</li>
+</ul>
+
+In the drf_api settings we need to update INSTALLED_APPS with the apps we download-
+
+-    'cloudinary_storage',
+-   'django.contrib.staticfiles',
+-  'rest_framework',
+- 'rest_framework.authtoken',
+-    'dj_rest_auth',
+-    'django.contrib.sites',
+-    'allauth',
+-    'allauth.account',
+-    'allauth.socialaccount',
+-   'dj_rest_auth.registration',
+-   'corsheaders',
+-   'cloudinary',
+-    'profiles',
+-    'posts',
+-    'comments',
+-    'likes',
+-    'followers',
+-    'django_filters',
+
+
+Then need to import the cloudinary storage -
+
+CLOUDINARY_STORAGE = {
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+}
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+<hr>
+
+Create the REST_FRAMEWORK, and include page paginiation, pagination count and a date/time format
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [(
+        'rest_framework.authentication.SessionAuthentication'
+        if 'DEV' in os.environ
+        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    )],
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': '%d %b %Y',
+}
+if 'DEV' not in os.environ:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+<hr>
+
+I will set the default renderer to JSON-
+
+if 'DEV' not in os.environ:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+
+<hr>
+
+Set the JWT tokens below - 
+
+REST_USE_JWT = True
+JWT_AUTH_SECURE = True
+JWT_AUTH_COOKIE = 'my-app-auth'
+JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+JWT_AUTH_SAMESITE = 'None'
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'drf_api.serializers.CurrentUserSerializer'
+}
+
+<hr>
+
+Have my secret key set below -
+
+SECRET_KEY = os.environ.get('my_secret_key')
+
+<hr>
+
+Now in this part below, I will be giving permission to the heroku URL of the deployed FitnessBlogz link to communicate with the API.
+
+ALLOWED_HOSTS = [
+    os.environ.get('ALLOWED_HOST'),
+    'localhost',
+]
+
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(
+        r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
+    ).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+
+
