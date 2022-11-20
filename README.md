@@ -73,6 +73,14 @@ Counts the number of profile that are following eachother
     <li>Liking and unliking posts are reflected throughout the API, the number of likes on a post in the front end are the same as the number of likes in the backend </li>
 </ul>
 
+Here I have 2 screenshots, the first screenshot is an image of the posts that have been loaded up, received and displayed in the front end...
+
+![JSON for posts in the front end](/assets/frontend_api_response.jpg)
+
+The 2nd screenshot is what the API is holding and as you can see they match, therefore the API is working..
+
+![JSON for what the API is holding](/assets/api_matching_front.jpg)
+
 ## PEP8 -
 
 ![Warning from the gitpod pycodestyle](/assets/pep8_warnings_manual.jpg)
